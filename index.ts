@@ -2,6 +2,7 @@ import * as pulumi from "@pulumi/pulumi";
 import * as aws from "@pulumi/aws";
 import * as awsx from "@pulumi/awsx";
 import {Region} from "@pulumi/aws";
+import * as service from "@pulumi/pulumiservice";
 
 // Create a new Pulumi stack configuration object
 const config = new pulumi.Config();
@@ -9,6 +10,23 @@ const config = new pulumi.Config();
 // Set up the AWS provider with the specified region.
 const provider = new aws.Provider('default', {
     region: Region.SAEast1,
+});
+
+const settings = new service.DeploymentSettings("deployment_settings", {
+    organization: 'hugojf',
+    project: "static-site",
+    stack: "pulumi-test",
+    operationContext: {
+        environmentVariables: {
+            TEST_VAR: "foo",
+        }
+    },
+    sourceContext: {
+        git: {
+            repoDir: "HugoHF/pulumi-test",
+            branch: "main",
+        }
+    }
 });
 
 // Create a bucket to serve our static site
@@ -27,7 +45,7 @@ new aws.s3.BucketPublicAccessBlock("example", {
 // Create our index document from the site content in the environment
 new aws.s3.BucketObject("index", {
     bucket: bucket,
-    content: '<h1>push to deploy 2</h1>',
+    content: '<h1>push to deploy 2222222222222</h1>',
     key: "index.html",
     contentType: "text/html; charset=utf-8",
 });
