@@ -27,7 +27,7 @@ new aws.s3.BucketPublicAccessBlock("example", {
 // Create our index document from the site content in the environment
 new aws.s3.BucketObject("index", {
     bucket: bucket,
-    content: '<h1>push to deploy</h1>',
+    content: '<h1>push to deploy 2</h1>',
     key: "index.html",
     contentType: "text/html; charset=utf-8",
 });
